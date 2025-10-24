@@ -5,25 +5,18 @@ import ToastManager, { Toast } from "toastify-react-native";
 export default function App() {
   return (
     <View className="flex-1 bg-gray-400 justify-between pt-10">
-      <ToastManager showProgressBar={false} />
       <View className="gap-10">
         <Button
           title="Show Success Toast"
           onPress={() => {
-            Toast.success("Success message!", { hideProgressBar: false });
+            Toast.success("Success message!");
           }}
         />
 
         <Button
           title="Show Error Toast"
           onPress={() => {
-            Toast.show({
-              type: "error",
-              text1: "Error message!",
-              position: "bottom",
-              autoHide: false,
-              progressBarColor: "transparent",
-            });
+            Toast.error("Error message!");
           }}
         />
 
@@ -41,8 +34,7 @@ export default function App() {
           }}
         />
 
-        {/* Toast provider should be at the root level */}
-        <ToastManager />
+        <ToastManager showProgressBar={false} />
       </View>
 
       <View className="h-[50%] bg-transparent">
