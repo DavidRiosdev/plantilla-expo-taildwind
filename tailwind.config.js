@@ -8,12 +8,16 @@ module.exports = {
     extend: {
       colors: {
         primary: Colors.primary,
-        primarySoft: Colors.primarySoft,
-        textPrimary: Colors.textPrimary,
-        textSecondary: Colors.textSecondary,
-        borderInputs: Colors.borderInputs,
-        textPlaceholder: Colors.textPlaceholder,
-        badgeGray: Colors.badgeGray,
+        "primary-soft": Colors.primarySoft,
+        "text-primary": Colors.textPrimary,
+        "text-secondary": Colors.textSecondary,
+        "badge-gray": Colors.badgeGray,
+      },
+      fontFamily: {
+        regular: ["Inter_400Regular"],
+        medium: ["Inter_500Medium"],
+        "semi-bold": ["Inter_600SemiBold"],
+        bold: ["Inter_700Bold"],
       },
     },
   },

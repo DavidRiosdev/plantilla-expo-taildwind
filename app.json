@@ -17,7 +17,8 @@
       {
         "experimentalLauncherActivity": true
       }
-    ]
+    ],
+    "expo-font"
   ],
   "name": "template-expo-app",
   "slug": "template-expo-app"
