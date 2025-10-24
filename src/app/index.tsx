@@ -3,50 +3,58 @@ import { View } from "react-native";
 import { Button } from "react-native-paper";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import ToastManager, { Toast } from "toastify-react-native";
+import * as WebBrowser from "expo-web-browser";
+import { useState } from "react";
 
 export default function App() {
+  const [result, setResult] = useState(null);
+
+  const _handlePressButtonAsync = async () => {
+    let result = await WebBrowser.openBrowserAsync("https://expo.dev");
+    setResult(result);
+  };
   return (
     <SafeAreaProvider>
       <SafeAreaView className="flex-1">
         <View className="flex-1 bg-gray-400 justify-between pt-10">
           <View className="gap-10">
             <Button
-              title="Show Success Toast"
-              onPress={() => {
-                Toast.success("Success message!");
-              }}
-            />
+              mode="contained"
+              onPress={() => Toast.success("Success message!")}
+            >
+              Show Success Toast
+            </Button>
 
             <Button
-              title="Show Error Toast"
-              onPress={() => {
-                Toast.error("Error message!");
-              }}
-            />
+              mode="contained"
+              onPress={() => Toast.error("Error message!")}
+            >
+              Show Error Toast
+            </Button>
 
             <Button
-              title="Show Info Toast"
-              onPress={() => {
-                Toast.info("Info message!");
-              }}
-            />
+              mode="contained"
+              onPress={() => Toast.info("Info message!")}
+            >
+              Show Info Toast
+            </Button>
 
             <Button
-              title="Show Warning Toast"
-              onPress={() => {
-                Toast.warn("Warning message!");
-              }}
-            />
+              mode="contained"
+              onPress={() => Toast.warn("Warning message!")}
+            >
+              Show Warning Toast
+            </Button>
 
-            <ToastManager showProgressBar={false} />
+            <ToastManager showProgressBar={false} position="bottom" />
           </View>
 
           <Button
-            icon="camera"
+            buttonColor="secondary"
             mode="contained"
-            onPress={() => console.log("Pressed")}
+            onPress={_handlePressButtonAsync}
           >
-            Press me
+            Open Browser
           </Button>
 
           <View className="h-[50%] bg-transparent">

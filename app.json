@@ -11,6 +11,12 @@
       {
         "origin": "https://n"
       }
+    ],
+    [
+      "expo-web-browser",
+      {
+        "experimentalLauncherActivity": true
+      }
     ]
   ],
   "name": "template-expo-app",
