@@ -1,35 +1,23 @@
 import theme from "@/config/themeConfig";
-import {
-  Inter_400Regular,
-  Inter_500Medium,
-  Inter_600SemiBold,
-  Inter_700Bold,
-  useFonts,
-} from "@expo-google-fonts/inter";
+import { useLoadFonts } from "@/hooks/useLoadFonts";
 import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { PaperProvider } from "react-native-paper";
 import "../global.css";
-import { View } from "react-native";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function Layout() {
-  const [fontsLoaded, error] = useFonts({
-    Inter_400Regular,
-    Inter_500Medium,
-    Inter_600SemiBold,
-    Inter_700Bold,
-  });
+  const { fontsLoaded } = useLoadFonts();
 
   useEffect(() => {
-    if (fontsLoaded || error) {
+    if (fontsLoaded) {
       SplashScreen.hide();
     }
-  }, [fontsLoaded, error]);
+  }, [fontsLoaded]);
 
-  if (!fontsLoaded && !error) {
+  if (!fontsLoaded) {
     return null; // pantalla vacía mientras carga la fuente
   }
 
