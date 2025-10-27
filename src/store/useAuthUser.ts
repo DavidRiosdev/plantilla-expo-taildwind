@@ -27,7 +27,6 @@ export const useAuthUser = create<AuthState>((set, get) => ({
         }
       );
 
-      console.log(data.access_token);
       await SecureStore.setItemAsync("token", data.access_token);
 
       set({
@@ -56,8 +55,6 @@ export const useAuthUser = create<AuthState>((set, get) => ({
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-
-      console.log(response);
 
       set({
         userLogged: response.data,
