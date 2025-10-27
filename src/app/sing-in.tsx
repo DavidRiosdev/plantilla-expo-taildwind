@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import React from "react";
-import { useAuthStore } from "@/utils/authStore";
+import { useAuthStore } from "@/store/authStore";
 import { Button, HelperText, TextInput } from "react-native-paper";
 import { Formik } from "formik";
 import * as Yup from "yup";

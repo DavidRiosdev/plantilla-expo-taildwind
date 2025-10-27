@@ -1,12 +1,12 @@
 import theme from "@/config/themeConfig";
 import { useLoadFonts } from "@/hooks/useLoadFonts";
-import { useAuthStore } from "@/utils/authStore";
 import axios from "axios";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { PaperProvider } from "react-native-paper";
 import "../global.css";
+import { useAuthStore } from "@/store/authStore";
 
 SplashScreen.preventAutoHideAsync();
 

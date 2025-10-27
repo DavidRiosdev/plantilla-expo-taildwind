@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import React from "react";
-import { useAuthStore } from "@/utils/authStore";
+import { useAuthStore } from "@/store/authStore";
 import { Button } from "react-native-paper";
 
 export default function settings() {
