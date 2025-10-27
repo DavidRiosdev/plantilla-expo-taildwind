@@ -1,6 +1,7 @@
 import theme from "@/config/themeConfig";
 import { useLoadFonts } from "@/hooks/useLoadFonts";
 import { useAuthUser } from "@/store/useAuthUser";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import axios from "axios";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -39,16 +40,26 @@ export default function Layout() {
     return null;
   }
 
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false, // 🚫 no reintentar en fallos
+      },
+    },
+  });
+
   return (
-    <PaperProvider theme={theme}>
-      <Stack>
-        <Stack.Protected guard={isAuthenticated}>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        </Stack.Protected>
-        <Stack.Protected guard={!isAuthenticated}>
-          <Stack.Screen name="sing-in" />
-        </Stack.Protected>
-      </Stack>
-    </PaperProvider>
+    <QueryClientProvider client={queryClient}>
+      <PaperProvider theme={theme}>
+        <Stack>
+          <Stack.Protected guard={isAuthenticated}>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          </Stack.Protected>
+          <Stack.Protected guard={!isAuthenticated}>
+            <Stack.Screen name="sing-in" />
+          </Stack.Protected>
+        </Stack>
+      </PaperProvider>
+    </QueryClientProvider>
   );
 }

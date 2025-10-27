@@ -2,6 +2,7 @@ import { create } from "zustand";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import { User } from "@/types/User";
+import { axiosInstance } from "@/axios/axiosInstance";
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -19,13 +20,10 @@ export const useAuthUser = create<AuthState>((set, get) => ({
 
   login: async (email, password) => {
     try {
-      const { data } = await axios.post(
-        "https://7b9578ae2741.ngrok-free.app/api/auth/login",
-        {
-          email,
-          password,
-        }
-      );
+      const { data } = await axiosInstance.post("/api/auth/login", {
+        email,
+        password,
+      });
 
       await SecureStore.setItemAsync("token", data.access_token);
 
@@ -49,12 +47,9 @@ export const useAuthUser = create<AuthState>((set, get) => ({
       const token = await SecureStore.getItemAsync("token");
       if (!token) throw new Error("No hay token");
 
-      const response = await axios.get(
-        `https://7b9578ae2741.ngrok-free.app/api/me`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const response = await axiosInstance.get(`/api/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       set({
         userLogged: response.data,
