@@ -18,7 +18,8 @@
         "experimentalLauncherActivity": true
       }
     ],
-    "expo-font"
+    "expo-font",
+    "expo-secure-store"
   ],
   "name": "template-expo-app",
   "slug": "template-expo-app"
