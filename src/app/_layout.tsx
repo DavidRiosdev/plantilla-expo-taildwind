@@ -11,7 +11,7 @@ import "../global.css";
 SplashScreen.preventAutoHideAsync();
 
 export default function Layout() {
-  const { isAuthenticated, isLoadingInitialData } = useAuthUser();
+  const { isAuthenticated } = useAuthUser();
   const { fontsLoaded } = useLoadFonts();
 
   useEffect(() => {
