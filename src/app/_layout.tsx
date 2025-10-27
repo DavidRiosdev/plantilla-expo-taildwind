@@ -1,17 +1,17 @@
 import theme from "@/config/themeConfig";
 import { useLoadFonts } from "@/hooks/useLoadFonts";
+import { useAuthUser } from "@/store/useAuthUser";
 import axios from "axios";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { PaperProvider } from "react-native-paper";
 import "../global.css";
-import { useAuthStore } from "@/store/authStore";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function Layout() {
-  const { isLoggedIn, shouldCreateAccount } = useAuthStore();
+  const { isAuthenticated, isLoadingInitialData } = useAuthUser();
   const { fontsLoaded } = useLoadFonts();
 
   useEffect(() => {
@@ -42,14 +42,11 @@ export default function Layout() {
   return (
     <PaperProvider theme={theme}>
       <Stack>
-        <Stack.Protected guard={isLoggedIn}>
+        <Stack.Protected guard={isAuthenticated}>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         </Stack.Protected>
-        <Stack.Protected guard={!isLoggedIn}>
+        <Stack.Protected guard={!isAuthenticated}>
           <Stack.Screen name="sing-in" />
-          <Stack.Protected guard={shouldCreateAccount}>
-            <Stack.Screen name="create-account" />
-          </Stack.Protected>
         </Stack.Protected>
       </Stack>
     </PaperProvider>

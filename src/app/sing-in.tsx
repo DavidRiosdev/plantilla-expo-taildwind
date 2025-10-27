@@ -1,9 +1,9 @@
 import { View, Text } from "react-native";
 import React from "react";
-import { useAuthStore } from "@/store/authStore";
 import { Button, HelperText, TextInput } from "react-native-paper";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { useAuthUser } from "@/store/useAuthUser";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Correo inválido").required("Campo obligatorio"),
@@ -13,16 +13,19 @@ const LoginSchema = Yup.object().shape({
 });
 
 export default function SingIn() {
-  const { logIn } = useAuthStore();
+  const { login } = useAuthUser();
 
-  const onSubmit = () => {
-    logIn();
+  const onSubmit = async (values: { email: string; password: string }) => {
+    await login(values.email, values.password);
   };
 
   return (
     <View className="flex-1 p-10">
       <Formik
-        initialValues={{ email: "", password: "" }}
+        initialValues={{
+          email: "david.alberto2212@gmail.com",
+          password: "12345678",
+        }}
         validationSchema={LoginSchema}
         onSubmit={onSubmit}
       >
@@ -66,7 +69,7 @@ export default function SingIn() {
           </View>
         )}
       </Formik>
-      <Button mode="contained" disabled={true} onPress={logIn}>
+      <Button mode="contained" disabled={true} onPress={() => login("", "")}>
         Log in
       </Button>
     </View>
