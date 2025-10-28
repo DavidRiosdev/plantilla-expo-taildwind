@@ -3,13 +3,6 @@ import * as SecureStore from "expo-secure-store";
 import { Alert, Linking } from "react-native";
 import { useAuthUser } from "../store/useAuthUser";
 
-interface ShowModal {
-  type?: "warning" | "error";
-  title: string;
-  content: string;
-  onOk?: () => void;
-}
-
 //LOCAL
 export const baseURL = "https://e4b46f76ce51.ngrok-free.app";
 
@@ -65,12 +58,10 @@ axiosInstance.interceptors.response.use(
         // Llamamos al endpoint de refresh
         const { data } = await axiosInstance.post("/api/auth/refresh");
 
-        localStorage.setItem("token", data.access_token); // Guardamos el nuevo token
+        SecureStore.setItem("token", data.token); // Guardamos el nuevo token
 
         // Actualizamos la petición original con el nuevo token
-        originalRequest.headers[
-          "Authorization"
-        ] = `Bearer ${data.access_token}`;
+        originalRequest.headers["Authorization"] = `Bearer ${data.token}`;
 
         // Reintentamos la petición original
         return axiosInstance(originalRequest);
@@ -111,15 +102,15 @@ axiosInstance.interceptors.response.use(
       );
     } else if (error?.response?.status === 500) {
       const extraMessage =
-        typeof error?.response?.message === "string"
-          ? ` (${error?.response?.message})`
+        typeof error?.response?.data?.message === "string"
+          ? ` (${error?.response?.data?.message})`
           : "";
 
       console.log("llega esto " + error.response.data.message);
 
       Alert.alert(
         "Error del servidor",
-        "Algo salió mal, intenta de nuevo o contacta a soporte.",
+        "Algo salió mal, intenta de nuevo o contacta a soporte." + extraMessage,
         [
           {
             text: "Contactar Soporte",
