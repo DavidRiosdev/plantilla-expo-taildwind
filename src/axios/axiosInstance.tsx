@@ -58,10 +58,12 @@ axiosInstance.interceptors.response.use(
         // Llamamos al endpoint de refresh
         const { data } = await axiosInstance.post("/api/auth/refresh");
 
-        SecureStore.setItem("token", data.token); // Guardamos el nuevo token
+        await SecureStore.setItemAsync("token", data.access_token); // Guardamos el nuevo token
 
         // Actualizamos la petición original con el nuevo token
-        originalRequest.headers["Authorization"] = `Bearer ${data.token}`;
+        originalRequest.headers[
+          "Authorization"
+        ] = `Bearer ${data.access_token}`;
 
         // Reintentamos la petición original
         return axiosInstance(originalRequest);
