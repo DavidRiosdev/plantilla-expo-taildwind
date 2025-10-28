@@ -6,4 +6,5 @@ export interface User {
   email: string;
   status: "active" | "desactive";
   created_at_show?: string;
+  role: string;
 }

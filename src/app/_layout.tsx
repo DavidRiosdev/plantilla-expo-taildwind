@@ -2,7 +2,6 @@ import theme from "@/config/themeConfig";
 import { useLoadFonts } from "@/hooks/useLoadFonts";
 import { useAuthUser } from "@/store/useAuthUser";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import axios from "axios";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
@@ -12,22 +11,19 @@ import "../global.css";
 SplashScreen.preventAutoHideAsync();
 
 export default function Layout() {
-  const { isAuthenticated } = useAuthUser();
+  const { isAuthenticated, getMe } = useAuthUser();
   const { fontsLoaded } = useLoadFonts();
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchUser = async () => {
       try {
-        const response = await axios.get(
-          "https://7b9578ae2741.ngrok-free.app/api/init"
-        );
-        console.log(response.data.message);
-      } catch (error) {
-        console.error("Error al obtener datos:", error.message);
+        await getMe();
+      } catch (error: any) {
+        console.error("Error al obtener usuario:", error.message);
       }
     };
 
-    fetchData();
+    fetchUser();
   }, []);
 
   useEffect(() => {

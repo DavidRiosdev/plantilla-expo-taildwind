@@ -1,90 +1,55 @@
-import { BottomSheetCustom } from "@/components/ui/BottomSheetCustom";
+import { useAuthUser } from "@/store/useAuthUser";
 import { Text, View } from "react-native";
-import { Button } from "react-native-paper";
+import { Button, List } from "react-native-paper";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import ToastManager, { Toast } from "toastify-react-native";
-import * as WebBrowser from "expo-web-browser";
-import { useState } from "react";
 
 export default function App() {
-  const [result, setResult] = useState(null);
+  const { userLogged, getMe } = useAuthUser();
 
-  const _handlePressButtonAsync = async () => {
-    let result = await WebBrowser.openBrowserAsync("https://expo.dev");
-    setResult(result);
+  const fetchUser = async () => {
+    try {
+      await getMe();
+    } catch (error: any) {
+      console.error("Error al obtener usuario:", error.message);
+    }
   };
+
   return (
     <SafeAreaProvider>
-      <SafeAreaView className="flex-1">
-        <View className="flex-1 bg-gray-400 justify-between pt-10">
-          <View className="grid grid-cols-2">
-            <Text className="font-bold text-3xl">Pruba de texto classname</Text>
-            <Text className="font-regular text-lg">Pruba de texto regular</Text>
-            <Text className="font-medium text-lg">Pruba de texto </Text>
-            <Text className="font-semi-bold text-lg">Pruba de texto</Text>
-            <Text className="font-bold text-lg">Pruba de texto</Text>
+      <SafeAreaView className="flex-1 m-10">
+        <View className="gap-4">
+          <Text className="text-2xl">Datos del usuario</Text>
+          <List.Section>
+            <List.Item
+              title="Nombre"
+              description={userLogged?.name}
+              left={(props) => <List.Icon {...props} icon="account" />}
+            />
+            <List.Item
+              title="Apellido"
+              description={userLogged?.lastname}
+              left={(props) => <List.Icon {...props} icon="account-outline" />}
+            />
+            <List.Item
+              title="email"
+              description={userLogged?.email}
+              left={(props) => <List.Icon {...props} icon="account-outline" />}
+            />
+            <List.Item
+              title="Rol"
+              description={userLogged?.role}
+              left={(props) => <List.Icon {...props} icon="account-outline" />}
+            />
+            <List.Item
+              title="estado"
+              description={userLogged?.status}
+              left={(props) => <List.Icon {...props} icon="account-outline" />}
+            />
+          </List.Section>
 
-            <Text style={{ fontFamily: "Inter_700Bold", fontSize: 30 }}>
-              Pruba de texto styles
-            </Text>
-            <View className="flex gap-3">
-              <Text style={{ fontFamily: "Inter_400Regular", fontSize: 16 }}>
-                Pruba de texto
-              </Text>
-              <Text style={{ fontFamily: "Inter_500Medium", fontSize: 16 }}>
-                Pruba de texto
-              </Text>
-              <Text style={{ fontFamily: "Inter_600SemiBold", fontSize: 16 }}>
-                Pruba de texto
-              </Text>
-              <Text style={{ fontFamily: "Inter_700Bold", fontSize: 16 }}>
-                Pruba de texto
-              </Text>
-            </View>
-          </View>
-          <View className="gap-10">
-            <Button
-              mode="contained"
-              onPress={() => Toast.success("Success message!")}
-            >
-              Show Success Toast
-            </Button>
-
-            <Button
-              mode="contained"
-              onPress={() => Toast.error("Error message!")}
-            >
-              Show Error Toast
-            </Button>
-
-            <Button
-              mode="contained"
-              onPress={() => Toast.info("Info message!")}
-            >
-              Show Info Toast
-            </Button>
-
-            <Button
-              mode="contained"
-              onPress={() => Toast.warn("Warning message!")}
-            >
-              Show Warning Toast
-            </Button>
-
-            <ToastManager showProgressBar={false} position="bottom" />
-          </View>
-
-          <Button
-            buttonColor="secondary"
-            mode="contained"
-            onPress={_handlePressButtonAsync}
-          >
-            Open Browser
+          <Button mode="contained" onPress={fetchUser}>
+            Get me
           </Button>
-
-          <View className="h-[50%] bg-transparent">
-            <BottomSheetCustom />
-          </View>
         </View>
       </SafeAreaView>
     </SafeAreaProvider>

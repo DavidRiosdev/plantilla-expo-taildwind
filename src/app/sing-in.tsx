@@ -4,6 +4,7 @@ import { Button, HelperText, TextInput } from "react-native-paper";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useAuthUser } from "@/store/useAuthUser";
+import { router } from "expo-router";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Correo inválido").required("Campo obligatorio"),
@@ -20,7 +21,7 @@ export default function SingIn() {
   };
 
   return (
-    <View className="flex-1 p-10">
+    <View className="flex-1 gap-4 p-10">
       <Formik
         initialValues={{
           email: "david.alberto2212@gmail.com",
@@ -65,12 +66,18 @@ export default function SingIn() {
               </Text>
             )}
 
-            <Button onPress={() => handleSubmit()}>Iniciar sesión</Button>
+            <Button mode="contained" onPress={() => handleSubmit()}>
+              Iniciar sesión
+            </Button>
           </View>
         )}
       </Formik>
-      <Button mode="contained" disabled={true} onPress={() => login("", "")}>
-        Log in
+      <Button
+        mode="contained"
+        buttonColor="blue"
+        onPress={() => router.push("/(tabs)")}
+      >
+        Entrar sin login
       </Button>
     </View>
   );

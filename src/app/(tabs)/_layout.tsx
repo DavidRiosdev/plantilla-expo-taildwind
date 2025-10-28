@@ -3,8 +3,8 @@ import { Tabs } from "expo-router";
 export default function TabsLayout() {
   return (
     <Tabs>
-      <Tabs.Screen name="Index" />
-      <Tabs.Screen name="Settings" />
+      <Tabs.Screen name="index" />
+      <Tabs.Screen name="settings" />
     </Tabs>
   );
 }

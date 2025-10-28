@@ -1,17 +1,17 @@
 import axios from "axios";
-import { useAuthUser } from "../store/useAuthUser";
-import { Colors } from "./../constants/Colors";
 import * as SecureStore from "expo-secure-store";
+import { Alert, Linking } from "react-native";
+/* import { useAuthUser } from "../store/useAuthUser"; */
 
 interface ShowModal {
   type?: "warning" | "error";
   title: string;
-  content: React.ReactNode;
+  content: string;
   onOk?: () => void;
 }
 
 //LOCAL
-export const baseURL = "http://127.0.0.1:8000";
+export const baseURL = "https://e4b46f76ce51.ngrok-free.app";
 
 //DEV
 /* export const baseURL = "https://apidevpos.vortexpos.com";  */
@@ -51,30 +51,6 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-function showModal({ type = "warning", title, content, onOk }: ShowModal) {
-  const config = {
-    title,
-    content,
-    keyboard: false,
-    maskClosable: false,
-    okButtonProps: {
-      className: "!py-[10px]",
-      style: {
-        backgroundColor: Colors.primary,
-        borderRadius: 12,
-        color: "white",
-      },
-    },
-    onOk,
-  };
-
-  if (type === "error") {
-    Modal.error(config);
-  } else {
-    Modal.warning(config);
-  }
-}
-
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -101,51 +77,56 @@ axiosInstance.interceptors.response.use(
       } catch (refreshError) {
         console.log(refreshError);
 
-        showModal({
-          title: "Sesión expirada",
-          content:
-            "Por seguridad, tu sesión ha expirado. Por favor, vuelve a iniciar sesión.",
-        });
+        Alert.alert(
+          "Sesión expirada",
+          "Por seguridad, tu sesión ha expirado. Por favor, vuelve a iniciar sesión.",
+          [
+            {
+              text: "Contactar Soporte",
+              onPress: () =>
+                Linking.openURL("mailto:desarrollo@grupovortex.cl"),
+            },
+            { text: "Cancelar", style: "cancel" },
+          ],
+          { cancelable: true }
+        );
 
-        useAuthUser.getState().logout();
+        /* useAuthUser.getState().logout(); */
         return Promise.reject(refreshError);
       }
     } else if (
       error_message === "Tu cuenta está desactivada. Acceso denegado."
     ) {
-      showModal({
-        title: "Tu cuenta está desactivada. Acceso denegado.",
-        content: "Serás redirigido al login.",
-        onOk: () => {
-          useAuthUser.getState().logout();
-        },
-      });
+      Alert.alert(
+        "Tu cuenta está desactivada. Acceso denegado.",
+        "Serás redirigido al login.",
+        [
+          {
+            text: "Contactar Soporte",
+            onPress: () => Linking.openURL("mailto:desarrollo@grupovortex.cl"),
+          },
+          { text: "Cancelar", style: "cancel" },
+        ],
+        { cancelable: true }
+      );
     } else if (error?.response?.status === 500) {
       const extraMessage =
         typeof error?.response?.message === "string"
           ? ` (${error?.response?.message})`
           : "";
 
-      showModal({
-        type: "error",
-        title: "Error del servidor",
-        content: (
-          <>
-            Algo salió mal, intenta de nuevo o contacta a soporte.{" "}
-            <a href="mailto:desarrollo@grupovortex.cl">
-              desarrollo@grupovortex.cl
-            </a>
-            {extraMessage && (
-              <>
-                <br />
-                <small className="text-text-secondary-500">
-                  {extraMessage}
-                </small>
-              </>
-            )}
-          </>
-        ),
-      });
+      Alert.alert(
+        "Error del servidor",
+        "Algo salió mal, intenta de nuevo o contacta a soporte.",
+        [
+          {
+            text: "Contactar Soporte",
+            onPress: () => Linking.openURL("mailto:desarrollo@grupovortex.cl"),
+          },
+          { text: "Cancelar", style: "cancel" },
+        ],
+        { cancelable: true }
+      );
     }
 
     return Promise.reject(error);

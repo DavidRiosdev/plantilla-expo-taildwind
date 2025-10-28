@@ -1,8 +1,7 @@
-import { create } from "zustand";
-import axios from "axios";
-import * as SecureStore from "expo-secure-store";
-import { User } from "@/types/User";
 import { axiosInstance } from "@/axios/axiosInstance";
+import { User } from "@/types/User";
+import * as SecureStore from "expo-secure-store";
+import { create } from "zustand";
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -14,7 +13,7 @@ interface AuthState {
 }
 
 export const useAuthUser = create<AuthState>((set, get) => ({
-  isAuthenticated: false,
+  isAuthenticated: !!SecureStore.getItem("token"),
   isLoadingInitialData: false,
   userLogged: null,
 
@@ -25,7 +24,7 @@ export const useAuthUser = create<AuthState>((set, get) => ({
         password,
       });
 
-      await SecureStore.setItemAsync("token", data.access_token);
+      await SecureStore.setItemAsync("token", data.token);
 
       set({
         userLogged: data.user,
@@ -47,9 +46,7 @@ export const useAuthUser = create<AuthState>((set, get) => ({
       const token = await SecureStore.getItemAsync("token");
       if (!token) throw new Error("No hay token");
 
-      const response = await axiosInstance.get(`/api/me`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axiosInstance.get(`/api/me`);
 
       set({
         userLogged: response.data,
