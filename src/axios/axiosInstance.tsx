@@ -71,14 +71,7 @@ axiosInstance.interceptors.response.use(
         Alert.alert(
           "Sesión expirada",
           "Por seguridad, tu sesión ha expirado. Por favor, vuelve a iniciar sesión.",
-          [
-            {
-              text: "Contactar Soporte",
-              onPress: () =>
-                Linking.openURL("mailto:desarrollo@grupovortex.cl"),
-            },
-            { text: "Cancelar", style: "cancel" },
-          ],
+          [{ text: "Cancelar", style: "cancel" }],
           { cancelable: true }
         );
 
@@ -91,13 +84,7 @@ axiosInstance.interceptors.response.use(
       Alert.alert(
         "Tu cuenta está desactivada. Acceso denegado.",
         "Serás redirigido al login.",
-        [
-          {
-            text: "Contactar Soporte",
-            onPress: () => Linking.openURL("mailto:desarrollo@grupovortex.cl"),
-          },
-          { text: "Cancelar", style: "cancel" },
-        ],
+        [{ text: "Cancelar", style: "cancel" }],
         { cancelable: true }
       );
     } else if (error?.response?.status === 500) {
@@ -110,7 +97,9 @@ axiosInstance.interceptors.response.use(
 
       Alert.alert(
         "Error del servidor",
-        "Algo salió mal, intenta de nuevo o contacta a soporte." + extraMessage,
+        "Algo salió mal, intenta de nuevo o contacta a soporte.\n" +
+          "Error: " +
+          extraMessage,
         [
           {
             text: "Contactar Soporte",
