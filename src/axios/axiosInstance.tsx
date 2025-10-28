@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import { Alert, Linking } from "react-native";
-/* import { useAuthUser } from "../store/useAuthUser"; */
+import { useAuthUser } from "../store/useAuthUser";
 
 interface ShowModal {
   type?: "warning" | "error";
@@ -91,7 +91,7 @@ axiosInstance.interceptors.response.use(
           { cancelable: true }
         );
 
-        /* useAuthUser.getState().logout(); */
+        useAuthUser.getState().logout();
         return Promise.reject(refreshError);
       }
     } else if (
@@ -114,6 +114,8 @@ axiosInstance.interceptors.response.use(
         typeof error?.response?.message === "string"
           ? ` (${error?.response?.message})`
           : "";
+
+      console.log("llega esto " + error.response.data.message);
 
       Alert.alert(
         "Error del servidor",
