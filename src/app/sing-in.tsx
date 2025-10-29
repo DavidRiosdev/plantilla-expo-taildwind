@@ -2,6 +2,7 @@ import { useAuthUser } from "@/store/useAuthUser";
 import { Formik } from "formik";
 import React, { useState } from "react";
 import { Keyboard, View } from "react-native";
+import { showMessage } from "react-native-flash-message";
 import { Button, HelperText, TextInput } from "react-native-paper";
 import ToastManager, { Toast } from "toastify-react-native";
 import * as Yup from "yup";
@@ -81,6 +82,18 @@ export default function SingIn() {
             >
               {errors.password}
             </HelperText>
+
+            <Button
+              onPress={() => {
+                /* HERE IS WHERE WE'RE GOING TO SHOW OUR FIRST MESSAGE */
+                showMessage({
+                  message: "Simple message",
+                  type: "info",
+                });
+              }}
+            >
+            xxxxx
+            </Button>
 
             <Button
               mode="contained"

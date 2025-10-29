@@ -5,9 +5,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { ActivityIndicator, PaperProvider } from "react-native-paper";
 import "../global.css";
+import FlashMessage from "react-native-flash-message";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -48,6 +49,7 @@ export default function Layout() {
   return (
     <QueryClientProvider client={queryClient}>
       <PaperProvider theme={theme}>
+        <FlashMessage position="top" />
         <Stack>
           <Stack.Protected guard={isAuthenticated}>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
