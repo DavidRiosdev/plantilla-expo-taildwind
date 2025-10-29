@@ -5,7 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import { PaperProvider } from "react-native-paper";
+import { Text, View } from "react-native";
+import { ActivityIndicator, PaperProvider } from "react-native-paper";
 import "../global.css";
 
 SplashScreen.preventAutoHideAsync();
@@ -34,6 +35,14 @@ export default function Layout() {
 
   if (!fontsLoaded) {
     return null;
+  }
+
+  if (isLoadingInitialData) {
+    return (
+      <View className="items-center justify-center flex-1 bg-white">
+        <ActivityIndicator size="large" color="#000" />
+      </View>
+    );
   }
 
   return (

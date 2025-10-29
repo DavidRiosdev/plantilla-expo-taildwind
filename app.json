@@ -2,6 +2,11 @@
   "scheme": "acme",
   "userInterfaceStyle": "automatic",
   "orientation": "default",
+  "splash": {
+    "backgroundColor": "#ffffff",
+    "resizeMode": "contain",
+    "image": "./src/assets/splahs.png"
+  },
   "web": {
     "output": "static"
   },
