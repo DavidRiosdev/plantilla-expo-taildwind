@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { Keyboard, View } from "react-native";
 import { showMessage } from "react-native-flash-message";
 import { Button, HelperText, TextInput } from "react-native-paper";
-import ToastManager, { Toast } from "toastify-react-native";
 import * as Yup from "yup";
 
 const LoginSchema = Yup.object().shape({
@@ -26,11 +25,11 @@ export default function SingIn() {
     } catch (error: any) {
       setIsLoandingButton(false);
       Keyboard.dismiss();
-
-      Toast.show({
-        type: "error",
-        text1: "No se pudo iniciar sesión",
-        text2: error.message,
+      showMessage({
+        message: "No se pudo iniciar sesión",
+        description: error.message,
+        icon: "danger",
+        type: "danger",
       });
     }
   };
@@ -84,20 +83,6 @@ export default function SingIn() {
             </HelperText>
 
             <Button
-              onPress={() => {
-                /* HERE IS WHERE WE'RE GOING TO SHOW OUR FIRST MESSAGE */
-                showMessage({
-                  message: "My message title",
-                  description: "My message description",
-                  icon: "danger",
-                  type: "success",
-                });
-              }}
-            >
-              xxxxx
-            </Button>
-
-            <Button
               mode="contained"
               loading={loadingButton}
               disabled={loadingButton}
@@ -108,7 +93,6 @@ export default function SingIn() {
           </View>
         )}
       </Formik>
-      <ToastManager showProgressBar={false} position="bottom" />
     </View>
   );
 }

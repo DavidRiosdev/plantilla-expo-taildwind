@@ -3,9 +3,9 @@ import { useAuthUser } from "@/store/useAuthUser";
 import * as WebBrowser from "expo-web-browser";
 import React, { useState } from "react";
 import { Text, View } from "react-native";
+import { showMessage } from "react-native-flash-message";
 import { Button } from "react-native-paper";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import ToastManager, { Toast } from "toastify-react-native";
 
 export default function settings() {
   const { logout } = useAuthUser();
@@ -51,28 +51,52 @@ export default function settings() {
           <View className="gap-10">
             <Button
               mode="contained"
-              onPress={() => Toast.success("Success message!")}
+              onPress={() =>
+                showMessage({
+                  message: "Success message!",
+                  icon: "success",
+                  type: "success",
+                })
+              }
             >
               Show Success Toast
             </Button>
 
             <Button
               mode="contained"
-              onPress={() => Toast.error("Error message!")}
+              onPress={() =>
+                showMessage({
+                  message: "Error message!",
+                  icon: "danger",
+                  type: "danger",
+                })
+              }
             >
               Show Error Toast
             </Button>
 
             <Button
               mode="contained"
-              onPress={() => Toast.info("Info message!")}
+              onPress={() =>
+                showMessage({
+                  message: "Info message!",
+                  icon: "info",
+                  type: "info",
+                })
+              }
             >
               Show Info Toast
             </Button>
 
             <Button
               mode="contained"
-              onPress={() => Toast.warn("Warning message!")}
+              onPress={() =>
+                showMessage({
+                  message: "Warning message",
+                  icon: "warning",
+                  type: "warning",
+                })
+              }
             >
               Show Warning Toast
             </Button>
@@ -80,8 +104,6 @@ export default function settings() {
             <Button mode="contained" buttonColor="red" onPress={logout}>
               Log Out
             </Button>
-
-            <ToastManager showProgressBar={false} position="bottom" />
           </View>
 
           <Button
