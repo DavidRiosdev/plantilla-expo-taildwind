@@ -8,10 +8,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import { StatusBar, View } from "react-native";
+import {  View } from "react-native";
 import FlashMessage from "react-native-flash-message";
 import { ActivityIndicator, PaperProvider } from "react-native-paper";
 import "../global.css";
+import { StatusBar } from "expo-status-bar";
 
 SplashScreen.preventAutoHideAsync();
 
