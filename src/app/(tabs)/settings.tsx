@@ -11,7 +11,7 @@ import { Text, View } from "react-native";
 import { showMessage } from "react-native-flash-message";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Button } from "react-native-paper";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function settings() {
   const { logout } = useAuthUser();
@@ -24,18 +24,15 @@ export default function settings() {
   };
 
   // ref
+
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
-  // callbacks
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log("handleSheetChanges", index);
-  }, []);
 
   return (
-    <SafeAreaProvider>
+    <>
       <SafeAreaView className="flex-1">
         <View className="justify-between flex-1 pt-10 bg-gray-400">
           <View className="grid grid-cols-2">
@@ -104,39 +101,31 @@ export default function settings() {
           >
             Open Browser
           </Button>
-
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            <BottomSheetModalProvider>
-              <Button onPress={handlePresentModalPress}>
-                "Abrir Bottom Sheet"
-              </Button>
-
-              <BottomSheetModal
-                ref={bottomSheetModalRef}
-                snapPoints={["30%", "60%", "90%"]}
-                enablePanDownToClose={true}
-                onChange={handleSheetChanges}
-              >
-                <BottomSheetView
-                  style={{ flex: 1, padding: 16, backgroundColor: "#333" }}
-                >
-                  <ScrollView style={{ flex: 1 }}>
-                    {Array.from({ length: 30 }).map((_, i) => (
-                      <Text
-                        key={i}
-                        style={{ marginVertical: 5, color: "white" }}
-                      >
-                        Awesome 🎉 {i + 1}
-                      </Text>
-                    ))}
-                  </ScrollView>
-                </BottomSheetView>
-              </BottomSheetModal>
-            </BottomSheetModalProvider>
-          </GestureHandlerRootView>
         </View>
       </SafeAreaView>
-    </SafeAreaProvider>
+
+      <GestureHandlerRootView
+        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+      >
+        <BottomSheetModalProvider>
+          <Button onPress={handlePresentModalPress}>
+            title="Abrir Bottom Sheet"
+          </Button>
+
+          <BottomSheetModal ref={bottomSheetModalRef} snapPoints={["50%"]}>
+            <BottomSheetView
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text>¡Hola desde el Bottom Sheet! 🎉</Text>
+            </BottomSheetView>
+          </BottomSheetModal>
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
+    </>
   );
 }
 
