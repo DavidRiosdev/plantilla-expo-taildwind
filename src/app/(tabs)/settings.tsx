@@ -1,9 +1,15 @@
-import { BottomSheetCustom } from "@/components/ui/BottomSheetCustom";
 import { useAuthUser } from "@/store/useAuthUser";
+import BottomSheet, {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+  BottomSheetView,
+} from "@gorhom/bottom-sheet";
 import * as WebBrowser from "expo-web-browser";
-import React, { useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
+import { ScrollView, StyleSheet } from "react-native";
 import { Text, View } from "react-native";
 import { showMessage } from "react-native-flash-message";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Button } from "react-native-paper";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
@@ -17,16 +23,27 @@ export default function settings() {
     setResult(result);
   };
 
+  // ref
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
+  // callbacks
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log("handleSheetChanges", index);
+  }, []);
+
   return (
     <SafeAreaProvider>
       <SafeAreaView className="flex-1">
-        <View className="flex-1 bg-gray-400 justify-between pt-10">
+        <View className="justify-between flex-1 pt-10 bg-gray-400">
           <View className="grid grid-cols-2">
-            <Text className="font-bold text-3xl">Pruba de texto classname</Text>
-            <Text className="font-regular text-lg">Pruba de texto regular</Text>
-            <Text className="font-medium text-lg">Pruba de texto </Text>
-            <Text className="font-semi-bold text-lg">Pruba de texto</Text>
-            <Text className="font-bold text-lg">Pruba de texto</Text>
+            <Text className="text-3xl font-bold">Pruba de texto classname</Text>
+            <Text className="text-lg font-regular">Pruba de texto regular</Text>
+            <Text className="text-lg font-medium">Pruba de texto </Text>
+            <Text className="text-lg font-semi-bold">Pruba de texto</Text>
+            <Text className="text-lg font-bold">Pruba de texto</Text>
 
             <Text style={{ fontFamily: "Inter_700Bold", fontSize: 30 }}>
               Pruba de texto styles
@@ -75,32 +92,6 @@ export default function settings() {
               Show Error Toast
             </Button>
 
-            <Button
-              mode="contained"
-              onPress={() =>
-                showMessage({
-                  message: "Info message!",
-                  icon: "info",
-                  type: "info",
-                })
-              }
-            >
-              Show Info Toast
-            </Button>
-
-            <Button
-              mode="contained"
-              onPress={() =>
-                showMessage({
-                  message: "Warning message",
-                  icon: "warning",
-                  type: "warning",
-                })
-              }
-            >
-              Show Warning Toast
-            </Button>
-
             <Button mode="contained" buttonColor="red" onPress={logout}>
               Log Out
             </Button>
@@ -114,11 +105,50 @@ export default function settings() {
             Open Browser
           </Button>
 
-          <View className="h-[50%] bg-transparent">
-            <BottomSheetCustom />
-          </View>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <BottomSheetModalProvider>
+              <Button onPress={handlePresentModalPress}>
+                "Abrir Bottom Sheet"
+              </Button>
+
+              <BottomSheetModal
+                ref={bottomSheetModalRef}
+                snapPoints={["30%", "60%", "90%"]}
+                enablePanDownToClose={true}
+                onChange={handleSheetChanges}
+              >
+                <BottomSheetView
+                  style={{ flex: 1, padding: 16, backgroundColor: "#333" }}
+                >
+                  <ScrollView style={{ flex: 1 }}>
+                    {Array.from({ length: 30 }).map((_, i) => (
+                      <Text
+                        key={i}
+                        style={{ marginVertical: 5, color: "white" }}
+                      >
+                        Awesome 🎉 {i + 1}
+                      </Text>
+                    ))}
+                  </ScrollView>
+                </BottomSheetView>
+              </BottomSheetModal>
+            </BottomSheetModalProvider>
+          </GestureHandlerRootView>
         </View>
       </SafeAreaView>
     </SafeAreaProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 24,
+    justifyContent: "center",
+    backgroundColor: "grey",
+  },
+  contentContainer: {
+    flex: 1,
+    alignItems: "center",
+  },
+});

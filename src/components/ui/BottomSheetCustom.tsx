@@ -14,6 +14,7 @@ export const BottomSheetCustom = () => {
   // callbacks
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
+    console.log("dddd");
   }, []);
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
@@ -30,8 +31,9 @@ export const BottomSheetCustom = () => {
         <BottomSheetModal
           ref={bottomSheetModalRef}
           onChange={handleSheetChanges}
+          snapPoints={["25%", "50%"]}
         >
-          <BottomSheetView className="flex-1 bg-gray-800 p-9 items-center w-full">
+          <BottomSheetView className="items-center flex-1 w-full bg-gray-800 p-9">
             <Text className="text-white">Awesome 🎉</Text>
           </BottomSheetView>
         </BottomSheetModal>
