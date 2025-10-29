@@ -8,7 +8,6 @@ const useInitialData = () => {
   useEffect(() => {
     const checkToken = async () => {
       const token = await SecureStore.getItemAsync("token");
-      await SecureStore.deleteItemAsync("token");
       if (token) getMe();
     };
 
