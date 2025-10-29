@@ -1,10 +1,10 @@
-import { View, Text } from "react-native";
-import React from "react";
-import { Button, HelperText, TextInput } from "react-native-paper";
-import { Formik } from "formik";
-import * as Yup from "yup";
 import { useAuthUser } from "@/store/useAuthUser";
-import { router } from "expo-router";
+import { Formik } from "formik";
+import React, { useState } from "react";
+import { Keyboard, View } from "react-native";
+import { Button, HelperText, TextInput } from "react-native-paper";
+import ToastManager, { Toast } from "toastify-react-native";
+import * as Yup from "yup";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Correo inválido").required("Campo obligatorio"),
@@ -16,12 +16,26 @@ const LoginSchema = Yup.object().shape({
 export default function SingIn() {
   const { login } = useAuthUser();
 
+  const [loadingButton, setIsLoandingButton] = useState<boolean>(false);
+
   const onSubmit = async (values: { email: string; password: string }) => {
-    await login(values.email, values.password);
+    try {
+      setIsLoandingButton(true);
+      await login(values.email, values.password);
+    } catch (error: any) {
+      setIsLoandingButton(false);
+      Keyboard.dismiss();
+
+      Toast.show({
+        type: "error",
+        text1: "No se pudo iniciar sesión",
+        text2: error.message,
+      });
+    }
   };
 
   return (
-    <View className="flex-1 gap-4 p-10">
+    <View className="flex-1 p-10">
       <Formik
         initialValues={{
           email: "nicolasgarciajimenez12@gmail.com",
@@ -59,26 +73,27 @@ export default function SingIn() {
               onBlur={handleBlur("password")}
               value={values.password}
               secureTextEntry
+              error={touched.password && !!errors.password}
             />
-            {touched.password && errors.password && (
-              <Text style={{ color: "red", marginBottom: 8 }}>
-                {errors.password}
-              </Text>
-            )}
+            <HelperText
+              type="error"
+              visible={touched.password && !!errors.password}
+            >
+              {errors.password}
+            </HelperText>
 
-            <Button mode="contained" onPress={() => handleSubmit()}>
+            <Button
+              mode="contained"
+              loading={loadingButton}
+              disabled={loadingButton}
+              onPress={() => handleSubmit()}
+            >
               Iniciar sesión
             </Button>
           </View>
         )}
       </Formik>
-      <Button
-        mode="contained"
-        buttonColor="blue"
-        onPress={() => router.push("/(tabs)")}
-      >
-        Entrar sin login
-      </Button>
+      <ToastManager showProgressBar={false} position="bottom" />
     </View>
   );
 }
