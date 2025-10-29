@@ -10,20 +10,20 @@ import "../global.css";
 
 SplashScreen.preventAutoHideAsync();
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false, // 🚫 no reintentar en fallos
+    },
+  },
+});
+
 export default function Layout() {
-  const { isAuthenticated, getMe } = useAuthUser();
+  const { isAuthenticated, getMe, isLoadingInitialData } = useAuthUser();
   const { fontsLoaded } = useLoadFonts();
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        await getMe();
-      } catch (error: any) {
-        console.error("Error al obtener usuario:", error.message);
-      }
-    };
-
-    fetchUser();
+    getMe();
   }, []);
 
   useEffect(() => {
@@ -35,14 +35,6 @@ export default function Layout() {
   if (!fontsLoaded) {
     return null;
   }
-
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: false, // 🚫 no reintentar en fallos
-      },
-    },
-  });
 
   return (
     <QueryClientProvider client={queryClient}>

@@ -43,9 +43,6 @@ export const useAuthUser = create<AuthState>((set, get) => ({
   getMe: async () => {
     set({ isLoadingInitialData: true });
     try {
-      const token = await SecureStore.getItemAsync("token");
-      if (!token) throw new Error("No hay token");
-
       const response = await axiosInstance.get(`/api/me`);
 
       set({

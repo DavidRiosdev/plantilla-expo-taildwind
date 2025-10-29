@@ -24,8 +24,8 @@ export default function SingIn() {
     <View className="flex-1 gap-4 p-10">
       <Formik
         initialValues={{
-          email: "david.alberto2212@gmail.com",
-          password: "12345678",
+          email: "nicolasgarciajimenez12@gmail.com",
+          password: "123456789",
         }}
         validationSchema={LoginSchema}
         onSubmit={onSubmit}
