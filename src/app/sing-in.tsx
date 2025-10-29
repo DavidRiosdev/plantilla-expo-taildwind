@@ -87,12 +87,14 @@ export default function SingIn() {
               onPress={() => {
                 /* HERE IS WHERE WE'RE GOING TO SHOW OUR FIRST MESSAGE */
                 showMessage({
-                  message: "Simple message",
-                  type: "info",
+                  message: "My message title",
+                  description: "My message description",
+                  icon: "danger",
+                  type: "success",
                 });
               }}
             >
-            xxxxx
+              xxxxx
             </Button>
 
             <Button
