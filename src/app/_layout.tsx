@@ -9,6 +9,8 @@ import { View } from "react-native";
 import { ActivityIndicator, PaperProvider } from "react-native-paper";
 import "../global.css";
 import FlashMessage from "react-native-flash-message";
+import { NetworkProvider } from "@/context/NetworkContext";
+import OfflineNotice from "@/components/ui/OfflineNotice";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -50,14 +52,17 @@ export default function Layout() {
     <QueryClientProvider client={queryClient}>
       <PaperProvider theme={theme}>
         <FlashMessage position="top" />
-        <Stack>
-          <Stack.Protected guard={isAuthenticated}>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          </Stack.Protected>
-          <Stack.Protected guard={!isAuthenticated}>
-            <Stack.Screen name="sing-in" />
-          </Stack.Protected>
-        </Stack>
+        <NetworkProvider>
+          <Stack>
+            <Stack.Protected guard={isAuthenticated}>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            </Stack.Protected>
+            <Stack.Protected guard={!isAuthenticated}>
+              <Stack.Screen name="sing-in" />
+            </Stack.Protected>
+          </Stack>
+          <OfflineNotice />
+        </NetworkProvider>
       </PaperProvider>
     </QueryClientProvider>
   );
