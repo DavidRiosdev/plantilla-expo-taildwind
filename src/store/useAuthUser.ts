@@ -30,8 +30,6 @@ export const useAuthUser = create<AuthState>((set, get) => ({
         userLogged: data.user,
         isAuthenticated: true,
       });
-
-      await get().getMe();
     } catch (error: any) {
       set({ isAuthenticated: false });
       const message =
