@@ -9,18 +9,18 @@ export default function settings() {
 
   return (
     <>
-      <SafeAreaView className="flex-1 px-6 pt-10">
-        <Text className="text-5xl font-semi-bold mb-20">Ajustes</Text>
+      <SafeAreaView className="flex-1 px-6 pt-8">
+        <Text className="mb-6 text-4xl font-semi-bold">Ajustes</Text>
         <View className="items-center gap-5">
           <Avatar.Text
-            size={150}
+            size={110}
             label={userLogged?.name[0] + userLogged?.lastname[0]}
           />
           <View className="items-center">
-            <Text className="text-4xl font-semi-bold">
+            <Text className="text-2xl font-semi-bold">
               {userLogged?.name + " " + userLogged?.lastname}
             </Text>
-            <Text className="text-2xl font-medium text-text-secondary">
+            <Text className="text-base font-medium text-text-secondary">
               {userLogged?.email}
             </Text>
           </View>
