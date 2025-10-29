@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import { View } from "react-native";
+import { StatusBar, View } from "react-native";
 import { ActivityIndicator, PaperProvider } from "react-native-paper";
 import "../global.css";
 import FlashMessage from "react-native-flash-message";
@@ -52,6 +52,7 @@ export default function Layout() {
     <QueryClientProvider client={queryClient}>
       <PaperProvider theme={theme}>
         <FlashMessage position="top" />
+        <StatusBar style="auto" />
         <NetworkProvider>
           <Stack>
             <Stack.Protected guard={isAuthenticated}>
