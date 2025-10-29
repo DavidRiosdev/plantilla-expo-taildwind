@@ -1,4 +1,7 @@
+import OfflineNotice from "@/components/ui/OfflineNotice";
 import theme from "@/config/themeConfig";
+import { NetworkProvider } from "@/context/NetworkContext";
+import useInitialData from "@/hooks/useInitialData";
 import { useLoadFonts } from "@/hooks/useLoadFonts";
 import { useAuthUser } from "@/store/useAuthUser";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -6,11 +9,9 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { StatusBar, View } from "react-native";
+import FlashMessage from "react-native-flash-message";
 import { ActivityIndicator, PaperProvider } from "react-native-paper";
 import "../global.css";
-import FlashMessage from "react-native-flash-message";
-import { NetworkProvider } from "@/context/NetworkContext";
-import OfflineNotice from "@/components/ui/OfflineNotice";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -23,12 +24,9 @@ const queryClient = new QueryClient({
 });
 
 export default function Layout() {
-  const { isAuthenticated, getMe, isLoadingInitialData } = useAuthUser();
+  const { isAuthenticated, isLoadingInitialData } = useAuthUser();
   const { fontsLoaded } = useLoadFonts();
-
-  useEffect(() => {
-    getMe();
-  }, []);
+  useInitialData(); // Carga datos de usuario
 
   useEffect(() => {
     if (fontsLoaded) {
