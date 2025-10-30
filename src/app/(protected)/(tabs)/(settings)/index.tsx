@@ -1,6 +1,6 @@
 import { useAuthUser } from "@/store/useAuthUser";
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { router, Stack } from "expo-router";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { List } from "react-native-paper";
@@ -11,7 +11,7 @@ export default function Settings() {
 
   return (
     <SafeAreaView className="flex-1 p-6 bg-white">
-      <Text className="text-3xl font-bold">Settings</Text>
+      <Text className="text-3xl font-bold mb-4">Settings</Text>
       <View className="flex-1 justify-between items-center">
         <View className="w-full">
           <List.Item
