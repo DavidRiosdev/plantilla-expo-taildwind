@@ -1,4 +1,5 @@
 import { useAuthUser } from "@/store/useAuthUser";
+import { Link } from "expo-router";
 import { Formik } from "formik";
 import React, { useState } from "react";
 import { Keyboard, View } from "react-native";
@@ -93,6 +94,11 @@ export default function SingIn() {
           </View>
         )}
       </Formik>
+
+      {/* Modal */}
+      <Link asChild push href="/modal">
+        <Button>Abrir modal</Button>
+      </Link>
     </View>
   );
 }

@@ -1,4 +1,5 @@
 import { useAuthUser } from "@/store/useAuthUser";
+import { Link } from "expo-router";
 import { Text, View } from "react-native";
 import { Button, List } from "react-native-paper";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
@@ -50,6 +51,11 @@ export default function App() {
           <Button mode="contained" onPress={fetchUser}>
             Get me
           </Button>
+
+          {/* Modal */}
+          <Link asChild push href="/modal">
+            <Button>Abrir modal</Button>
+          </Link>
         </View>
       </SafeAreaView>
     </SafeAreaProvider>
