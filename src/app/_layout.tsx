@@ -55,12 +55,14 @@ export default function Layout() {
         <NetworkProvider>
           <Stack>
             <Stack.Protected guard={isAuthenticated}>
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="(protected)"
+                options={{ headerShown: false }}
+              />
             </Stack.Protected>
             <Stack.Protected guard={!isAuthenticated}>
               <Stack.Screen name="sing-in" />
             </Stack.Protected>
-            <Stack.Screen name="modal" options={{ presentation: "modal" }} />
           </Stack>
           <OfflineNotice />
         </NetworkProvider>

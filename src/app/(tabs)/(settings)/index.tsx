@@ -1,11 +1,11 @@
 import { useAuthUser } from "@/store/useAuthUser";
 import React from "react";
 import { Text, View } from "react-native";
-import { Avatar } from "react-native-paper";
+import { Avatar, Button } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function settings() {
-  const { userLogged } = useAuthUser();
+  const { userLogged, logout } = useAuthUser();
 
   return (
     <>
@@ -24,6 +24,10 @@ export default function settings() {
               {userLogged?.email}
             </Text>
           </View>
+
+          <Button mode="contained" buttonColor="red" onPress={logout}>
+            Log Out
+          </Button>
         </View>
       </SafeAreaView>
     </>

@@ -16,7 +16,7 @@ module.exports = {
       fontFamily: {
         regular: ["Inter_400Regular"],
         medium: ["Inter_500Medium"],
-        "semi-bold": ["Inter_600SemiBold"],
+        "semibold": ["Inter_600SemiBold"],
         bold: ["Inter_700Bold"],
       },
     },
