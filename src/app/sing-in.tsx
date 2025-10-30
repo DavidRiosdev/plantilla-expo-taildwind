@@ -1,3 +1,4 @@
+import CustomButton from "@/components/ui/design-components/CustomButton";
 import { useAuthUser } from "@/store/useAuthUser";
 import { Link } from "expo-router";
 import { Formik } from "formik";
@@ -83,14 +84,14 @@ export default function SingIn() {
               {errors.password}
             </HelperText>
 
-            <Button
+            <CustomButton
               mode="contained"
               loading={loadingButton}
               disabled={loadingButton}
               onPress={() => handleSubmit()}
             >
               Iniciar sesión
-            </Button>
+            </CustomButton>
           </View>
         )}
       </Formik>
