@@ -22,7 +22,7 @@ export default function CustomTextInput({
           <TextInput.Icon
             icon={(iconProps) => (
               <Ionicons
-                name={secureTextEntry ? "eye-outline" : "eye-off-outline"}
+                name={secureTextEntry ? "eye-off-outline" : "eye-outline"}
                 size={20}
                 {...iconProps}
               />

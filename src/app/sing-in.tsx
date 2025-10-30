@@ -1,5 +1,5 @@
-import CustomButton from "@/components/ui/design-components/CustomButton";
-import CustomTextInput from "@/components/ui/design-components/CustomTextInput";
+import CustomButton from "@/components/ui/design/CustomButton";
+import CustomTextInput from "@/components/ui/design/CustomTextInput";
 import { useAuthUser } from "@/store/useAuthUser";
 import { Link } from "expo-router";
 import { Formik } from "formik";
