@@ -9,7 +9,6 @@ export default function SettingsLayout() {
         name="modal-edit-account"
         options={{
           title: "Modal settings",
-          presentation: "modal",
           headerTitleAlign: "center",
         }}
       />

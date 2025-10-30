@@ -1,5 +1,6 @@
 import { useAuthUser } from "@/store/useAuthUser";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { List } from "react-native-paper";
@@ -10,7 +11,7 @@ export default function Settings() {
 
   return (
     <SafeAreaView className="flex-1 p-6 ">
-      <Text className="mb-6 text-2xl font-bold">Settings</Text>
+      <Text className="text-3xl font-bold">Settings</Text>
       <View className="flex-1 justify-between items-center">
         <View className="w-full">
           <List.Item
@@ -20,10 +21,10 @@ export default function Settings() {
               <Ionicons name="person-outline" size={24} color="black" />
             )}
             right={() => (
-              <Ionicons name="chevron-forward-sharp" size={24} color="gray" />
+              <Ionicons name="chevron-forward-sharp" size={20} color="gray" />
             )}
             onPress={() => {
-              console.log("Account profile ");
+              router.push("/modal-edit-account");
             }}
           />
           <List.Item
@@ -34,7 +35,7 @@ export default function Settings() {
               <Ionicons name="log-out-outline" color="red" size={24} />
             )}
             right={() => (
-              <Ionicons name="chevron-forward-sharp" size={24} color="gray" />
+              <Ionicons name="chevron-forward-sharp" size={20} color="gray" />
             )}
             onPress={logout}
           />
@@ -55,5 +56,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#C6C6C6",
     width: "100%",
+    paddingVertical: 14,
   },
 });
