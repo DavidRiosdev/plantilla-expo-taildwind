@@ -61,7 +61,7 @@ export default function Layout() {
               />
             </Stack.Protected>
             <Stack.Protected guard={!isAuthenticated}>
-              <Stack.Screen name="sing-in" />
+              <Stack.Screen name="sing-in" options={{ headerShown: false }} />
             </Stack.Protected>
           </Stack>
           <OfflineNotice />

@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import { Image, Keyboard, Text, View } from "react-native";
 import { showMessage } from "react-native-flash-message";
 import { HelperText } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 import * as Yup from "yup";
 
 const LoginSchema = Yup.object().shape({
@@ -38,11 +39,11 @@ export default function SingIn() {
   };
 
   return (
-    <View className="px-10 ">
-      <View className="flex flex-col items-center justify-center my-4 ">
+    <SafeAreaView className="flex-1 px-6 bg-white">
+      <View className="items-center justify-center mb-10">
         <Image
           source={LOGO}
-          style={{ width: 170, height: 50 }}
+          style={{ width: 130 }}
           resizeMode="contain"
         />
       </View>
@@ -99,7 +100,7 @@ export default function SingIn() {
               <HelperText type="error">{errors.password}</HelperText>
             )}
 
-            <Text className="w-full pt-4 pb-4 text-base text-right">
+            <Text className="w-full py-6 text-lg text-right">
               ¿Olvidaste la contraseña?
             </Text>
 
@@ -112,21 +113,18 @@ export default function SingIn() {
               Iniciar sesión
             </CustomButton>
 
-            <Text className="w-full pt-6 pb-4 text-base text-center text-text-secondary">
+            <Text className="w-full pt-6 pb-4 text-lg text-center text-text-secondary">
               ¿No tienes cuenta?
             </Text>
 
             <CustomButton
               mode="outlined"
-              loading={loadingButton}
-              disabled={loadingButton}
-              onPress={() => handleSubmit()}
             >
               Registrate
             </CustomButton>
           </View>
         )}
       </Formik>
-    </View>
+    </SafeAreaView>
   );
 }
