@@ -10,13 +10,14 @@ export default function Settings() {
   const { userLogged, logout } = useAuthUser();
 
   return (
-    <SafeAreaView className="flex-1 p-6 ">
+    <SafeAreaView className="flex-1 p-6 bg-white">
       <Text className="text-3xl font-bold">Settings</Text>
       <View className="flex-1 justify-between items-center">
         <View className="w-full">
           <List.Item
             title={<Text className="font-semibold">Account Profile</Text>}
             style={styles.list_item}
+            rippleColor="transparent"
             left={() => (
               <Ionicons name="person-outline" size={24} color="black" />
             )}
@@ -28,9 +29,9 @@ export default function Settings() {
             }}
           />
           <List.Item
-            title={<Text className="font-semibold">Log Out</Text>}
-            titleStyle={{ color: "red", fontWeight: "bold" }}
+            title={<Text className="font-semibold text-red-500">Log Out</Text>}
             style={styles.list_item}
+            rippleColor="transparent"
             left={() => (
               <Ionicons name="log-out-outline" color="red" size={24} />
             )}
@@ -54,8 +55,8 @@ export default function Settings() {
 const styles = StyleSheet.create({
   list_item: {
     borderBottomWidth: 1,
-    borderBottomColor: "#C6C6C6",
+    borderBottomColor: "#F2F4F6",
     width: "100%",
-    paddingVertical: 14,
+    paddingVertical: 12,
   },
 });
