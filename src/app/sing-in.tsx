@@ -1,12 +1,12 @@
 import CustomButton from "@/components/ui/design/CustomButton";
 import CustomTextInput from "@/components/ui/design/CustomTextInput";
+import LOGO from "@/constants/Logo";
 import { useAuthUser } from "@/store/useAuthUser";
-import { Link } from "expo-router";
 import { Formik } from "formik";
 import React, { useState } from "react";
-import { Keyboard, View } from "react-native";
+import { Image, Keyboard, Text, View } from "react-native";
 import { showMessage } from "react-native-flash-message";
-import { Button, HelperText, TextInput } from "react-native-paper";
+import { HelperText } from "react-native-paper";
 import * as Yup from "yup";
 
 const LoginSchema = Yup.object().shape({
@@ -38,7 +38,19 @@ export default function SingIn() {
   };
 
   return (
-    <View className="flex-1 p-10">
+    <View className="px-10 ">
+      <View className="flex flex-col items-center justify-center my-4 ">
+        <Image
+          source={LOGO}
+          style={{ width: 170, height: 50 }}
+          resizeMode="contain"
+        />
+      </View>
+
+      <Text className="w-full mb-10 text-2xl font-bold text-center">
+        Inicio de sesión
+      </Text>
+
       <Formik
         initialValues={{
           email: "nicolasgarciajimenez12@gmail.com",
@@ -55,35 +67,41 @@ export default function SingIn() {
           errors,
           touched,
         }) => (
-          <View className="flex flex-col justify-between">
-            <CustomTextInput
-              label="Correo electrónico"
-              value={values.email}
-              onChangeText={handleChange("email")}
-              onBlur={handleBlur("email")}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              error={touched.email && !!errors.email}
-            />
+          <View className="flex justify-center w-full">
+            <View>
+              <CustomTextInput
+                label="Correo electrónico"
+                value={values.email}
+                onChangeText={handleChange("email")}
+                onBlur={handleBlur("email")}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                error={touched.email && !!errors.email}
+              />
+            </View>
 
-            <HelperText type="error" visible={touched.email && !!errors.email}>
-              {errors.email}
-            </HelperText>
+            {touched.email && !!errors.email && (
+              <HelperText type="error">{errors.email}</HelperText>
+            )}
 
-            <CustomTextInput
-              label="Contraseña"
-              onChangeText={handleChange("password")}
-              onBlur={handleBlur("password")}
-              value={values.password}
-              isPassword={true}
-              error={touched.password && !!errors.password}
-            />
-            <HelperText
-              type="error"
-              visible={touched.password && !!errors.password}
-            >
-              {errors.password}
-            </HelperText>
+            <View className="pt-4">
+              <CustomTextInput
+                label="Contraseña"
+                onChangeText={handleChange("password")}
+                onBlur={handleBlur("password")}
+                value={values.password}
+                isPassword={true}
+                error={touched.password && !!errors.password}
+              />
+            </View>
+
+            {touched.password && !!errors.password && (
+              <HelperText type="error">{errors.password}</HelperText>
+            )}
+
+            <Text className="w-full pt-4 pb-4 text-base text-right">
+              ¿Olvidaste la contraseña?
+            </Text>
 
             <CustomButton
               mode="contained"
@@ -93,14 +111,22 @@ export default function SingIn() {
             >
               Iniciar sesión
             </CustomButton>
+
+            <Text className="w-full pt-6 pb-4 text-base text-center text-text-secondary">
+              ¿No tienes cuenta?
+            </Text>
+
+            <CustomButton
+              mode="outlined"
+              loading={loadingButton}
+              disabled={loadingButton}
+              onPress={() => handleSubmit()}
+            >
+              Registrate
+            </CustomButton>
           </View>
         )}
       </Formik>
-
-      {/* Modal */}
-      <Link asChild push href="/modal">
-        <Button>Abrir modal</Button>
-      </Link>
     </View>
   );
 }
