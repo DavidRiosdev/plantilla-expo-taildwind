@@ -10,4 +10,6 @@ export const Colors = {
   textPlaceholder: "#9CA3AF", // Color para textos de placeholder dentro de inputs
 
   badgeGray: "#F4F4F5", // Color de fondo para badges o etiquetas grises
+
+  black: "#1F1F1F",
 };
