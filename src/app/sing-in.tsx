@@ -1,4 +1,5 @@
 import CustomButton from "@/components/ui/design-components/CustomButton";
+import CustomTextInput from "@/components/ui/design-components/CustomTextInput";
 import { useAuthUser } from "@/store/useAuthUser";
 import { Link } from "expo-router";
 import { Formik } from "formik";
@@ -55,7 +56,7 @@ export default function SingIn() {
           touched,
         }) => (
           <View className="flex flex-col justify-between">
-            <TextInput
+            <CustomTextInput
               label="Correo electrónico"
               value={values.email}
               onChangeText={handleChange("email")}
@@ -69,12 +70,12 @@ export default function SingIn() {
               {errors.email}
             </HelperText>
 
-            <TextInput
-              placeholder="Contraseña"
+            <CustomTextInput
+              label="Contraseña"
               onChangeText={handleChange("password")}
               onBlur={handleBlur("password")}
               value={values.password}
-              secureTextEntry
+              isPassword={true}
               error={touched.password && !!errors.password}
             />
             <HelperText
