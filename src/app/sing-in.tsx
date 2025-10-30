@@ -48,7 +48,7 @@ export default function SingIn() {
         />
       </View>
 
-      <Text className="w-full mb-10 text-2xl font-bold text-center">
+      <Text className="w-full mb-10 text-3xl font-bold text-center">
         Inicio de sesión
       </Text>
 
