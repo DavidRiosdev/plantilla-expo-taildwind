@@ -5,7 +5,7 @@ export default function CustomButton(props: ButtonProps) {
   return (
     <Button
       style={{ borderRadius: 10 }}
-      labelStyle={{ fontSize: 14, fontWeight: "700" }}
+      labelStyle={{ fontSize: 14, fontWeight: "600" }}
       className="px-4 py-1"
       {...props}
     />
